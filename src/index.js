@@ -2,7 +2,7 @@ import * as use from "@tensorflow-models/universal-sentence-encoder";
 import { renderSimilarityMatrix } from "./similarityMatrix";
 import "./style.css";
 
-const sentences = [
+const ToDos = [
   "Hit the gym",
   "Go for a run",
   "Study Math",
@@ -26,30 +26,26 @@ const similarityScore = async (sentenceAIndex, sentenceBIndex, embeddings) => {
 const run = async () => {
   const model = await use.load();
 
-  const sentenceEmbedding = await model.embed(sentences[0]);
-  console.log(sentenceEmbedding.shape);
-  console.log(sentenceEmbedding.dataSync());
+  const todoEmbedding = await model.embed(ToDos[0]);
+  console.log(todoEmbedding.shape);
+  console.log(todoEmbedding.dataSync());
 
-  const sentenceEmbeddings = await model.embed(sentences);
-  const firstPairScore = await similarityScore(0, 1, sentenceEmbeddings);
-  console.log(
-    `${sentences[0]}\n${sentences[1]}\nsimilarity: ${firstPairScore}`
-  );
+  const todosEmbeddings = await model.embed(ToDos);
+  const firstPairScore = await similarityScore(0, 1, todosEmbeddings);
+  console.log(`${ToDos[0]}\n${ToDos[1]}\nsimilarity: ${firstPairScore}`);
 
-  const firstThirdScore = await similarityScore(0, 2, sentenceEmbeddings);
-  console.log(
-    `${sentences[0]}\n${sentences[2]}\nsimilarity: ${firstThirdScore}`
-  );
+  const firstThirdScore = await similarityScore(0, 2, todosEmbeddings);
+  console.log(`${ToDos[0]}\n${ToDos[2]}\nsimilarity: ${firstThirdScore}`);
 
   document.querySelector("#loading").style.display = "none";
 
-  renderSentences();
+  renderToDos();
 
-  await renderSimilarityMatrix(model, sentences);
+  await renderSimilarityMatrix(model, ToDos);
 };
 
-const renderSentences = () => {
-  sentences.forEach((sentence, i) => {
+const renderToDos = () => {
+  ToDos.forEach((sentence, i) => {
     const sentenceDom = document.createElement("div");
     sentenceDom.textContent = `${i + 1}) ${sentence}`;
     document.querySelector("#sentences-container").appendChild(sentenceDom);

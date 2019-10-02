@@ -30,11 +30,11 @@ const run = async () => {
   console.log(todoEmbedding.shape);
   console.log(todoEmbedding.dataSync());
 
-  const todosEmbeddings = await model.embed(ToDos);
-  const firstPairScore = await similarityScore(0, 1, todosEmbeddings);
+  const todoEmbeddings = await model.embed(ToDos);
+  const firstPairScore = await similarityScore(0, 1, todoEmbeddings);
   console.log(`${ToDos[0]}\n${ToDos[1]}\nsimilarity: ${firstPairScore}`);
 
-  const firstThirdScore = await similarityScore(0, 2, todosEmbeddings);
+  const firstThirdScore = await similarityScore(0, 2, todoEmbeddings);
   console.log(`${ToDos[0]}\n${ToDos[2]}\nsimilarity: ${firstThirdScore}`);
 
   document.querySelector("#loading").style.display = "none";
